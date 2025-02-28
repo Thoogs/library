@@ -10,6 +10,7 @@ BOOK_NAME_LEN = 35
 BOOK_AUTHOR_LEN = 35
 BOOK_ISBN_LEN = 13
 BOOK_PUB_YEAR_LEN = 4
+ROW_LENGTH = 98
 
 
 def clear():
@@ -61,9 +62,8 @@ def print_data(books: list[Book]):
         # This could be done more cleanly by assigning each header column one at a time
         # and then concatenating them together.
         data_row = f"{book.book_name:{BOOK_NAME_LEN}} | {book.author_name:{BOOK_AUTHOR_LEN}} | {book.isbn:{BOOK_ISBN_LEN}} | {book.pub_year:{BOOK_PUB_YEAR_LEN}}"
-        row_len = len(data_row)
         print(data_row)
-        print("-" * row_len)
+        print("-" * ROW_LENGTH)
 
 
 def add_book_to_db(books: list[Book], db_file: str, header: str) -> list[Book]:
@@ -117,8 +117,8 @@ def main():
 
     # Open the db file and start main loop
     try:
-        with open(db_file, "r") as book_db:
-            while True:
+        while True:
+            with open(db_file, "r") as book_db:
                 # read our header and data
                 header = read_header(book_db)
                 books_csv = read_data(book_db)
