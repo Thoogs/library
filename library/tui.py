@@ -75,6 +75,7 @@ def add_book_to_db(books: list[Book], db_file: str, header: str) -> list[Book]:
     book_isbn = input("Book ISBN: ")
     book_pub_year = input("Book publishing year: ")
     # clear screen here
+    clear()
     # Confirm user data and chose if we write it
     print(f"""Data you entered: 
     Book name: {book_name}
@@ -126,7 +127,7 @@ def main():
                 books = csv_to_books(books_csv)
                 # See what the user wants to do
                 user_choice = print_main_menu()
-                match user_choice:
+                match user_choice.lower():
                     case "1":
                         add_book_to_db(books, db_file, header)
                         clear()
