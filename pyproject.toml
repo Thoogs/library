@@ -20,3 +20,5 @@ dev = [
   "pre-commit"
 ]
 
+[project.scripts]
+library_app = "library.tui:main"
