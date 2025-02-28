@@ -39,11 +39,15 @@ def csv_to_books(csv: str) -> list[Book]:
     """Takes a string and turns it into list of Book objects"""
     books = []
     # Strip possible newline characters from start and end, then split
+    csv = csv.strip()
     csv = csv.split("\n")
     for line in csv:
         line = line.strip()
         line_split = line.split("/")
         try:
+            # Check that we don't read empty lines.
+            if len(line_split) == 0:
+                continue
             books.append(
                 Book(
                     line_split[BookFields.BOOK_NAME.value],
