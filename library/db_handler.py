@@ -21,7 +21,7 @@ def write_header(db_file: TextIO, header: str):
 
 
 def read_data(db_file: TextIO) -> str:
-    """Reads data lines from file and yield it as a string.
+    """Reads data lines from file and returns it as a string.
     We expect that read_header has been called before read_data"""
     books_csv = ""
     for row in db_file:
@@ -30,5 +30,6 @@ def read_data(db_file: TextIO) -> str:
 
 
 def write_data(db_file: TextIO, book_data: str):
-    """Writes the book data from a string into the db_file"""
+    """Writes the book data from a string into the db_file
+    We expect that write_header has been called before write_data"""
     db_file.write(book_data)
