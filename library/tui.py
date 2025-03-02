@@ -6,6 +6,7 @@ from os import path, name, system
 from library.book import Book, sort_books, books_to_csv, csv_to_books
 from library.db_handler import write_data, write_header, read_data, read_header
 
+# These could be turned into enum class and we could use the value in f-strings
 BOOK_NAME_LEN = 35
 BOOK_AUTHOR_LEN = 35
 BOOK_ISBN_LEN = 13
@@ -72,6 +73,8 @@ def add_book_to_db(books: list[Book], db_file: str, header: str) -> list[Book]:
     print("Add book to db\n")
     book_name = input("Book name: ")
     book_author = input("Book author: ")
+    # We should have prompted here to get valid input if user gives us
+    # something that doesn't go into int in a loop
     book_isbn = input("Book ISBN: ")
     book_pub_year = input("Book publishing year: ")
     # clear screen here
@@ -117,8 +120,14 @@ def main():
             book_db.write("Book/Author/ISBN/Year\n")
 
     # Open the db file and start main loop
+
+    # This try-except should be removed, and the error checking should be within the functions
+    # that have a chance to fail for some reason, like file not being open.
+    # Currently this generates error messages that are hard to debug as they are so wide ranging.
     try:
         while True:
+            # This open could be handled in the library level, but at the very least it should
+            # be scoped to the read functions instead of the whole main loop
             with open(db_file, "r") as book_db:
                 # read our header and data
                 header = read_header(book_db)
@@ -127,6 +136,8 @@ def main():
                 books = csv_to_books(books_csv)
                 # See what the user wants to do
                 user_choice = print_main_menu()
+
+                # We probably would also need to strip() here just in case there is white space.
                 match user_choice.lower():
                     case "1":
                         add_book_to_db(books, db_file, header)
@@ -143,6 +154,7 @@ def main():
                         clear()
                         print("Invalid option.")
 
+    # This error message is very bad, and should be more specific
     except Exception as e:
         print("Cannot open or edit file.", e)
 

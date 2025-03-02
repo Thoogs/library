@@ -46,8 +46,11 @@ def csv_to_books(csv: str) -> list[Book]:
         line_split = line.split("/")
         try:
             # Check that we don't read empty lines.
+
+            # This check most likely is unnecessary
             if len(line_split) == 0:
                 continue
+
             books.append(
                 Book(
                     line_split[BookFields.BOOK_NAME.value],
